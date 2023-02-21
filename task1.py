@@ -8,12 +8,17 @@ parser.add_argument("--input_language", default='aab', type=str, help="Language 
 
 def main(args: argparse.Namespace):
     par_val = np.loadtxt('data/param_value.csv', delimiter=',') # feature_value
-    with open('test/languages.txt') as f:
+    with open('data/languages.txt') as f:
         languages = f.read()
     langs_dict = json.loads(languages)
     
     scores_dict = {}
     input_lang = args.input_language
+    
+    if input_lang not in langs_dict.keys():
+        print("This language code is wrong")
+        exit()
+        
     input_lang_row = langs_dict[input_lang]
     score = -1
     output_lang = ''

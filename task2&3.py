@@ -9,15 +9,19 @@ parser.add_argument("--genus", default='Slavic', type=str, help="Genus")
 
 def main(args: argparse.Namespace):
     par_val = np.loadtxt('data/param_value.csv', delimiter=',') # feature_value
-    with open('test/languages.txt') as f:
+    with open('data/languages.txt') as f:
         languages = f.read()
     langs_dict = json.loads(languages)
 
-    with open('test/genus.txt') as f:
+    with open('data/genus.txt') as f:
         genus = f.read()
     lang_genus_dict = json.loads(genus)
 
     genus = args.genus
+    
+    if genus not in lang_genus_dict.values():
+        print("This genus does not exist")
+        exit()
 
     languages_in_genus = []
 
