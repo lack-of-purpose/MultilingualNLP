@@ -41,7 +41,9 @@ def main(args: argparse.Namespace):
             if another_lang == lang:
                 continue
             another_lang_row = langs_dict[another_lang]
-            num_of_common_features = np.count_nonzero(~np.isnan(par_val[lang_row,:] + par_val[another_lang_row,:]))
+            num_of_features1 = np.count_nonzero(~np.isnan(par_val[lang_row,:]))
+            num_of_features2 = np.count_nonzero(~np.isnan(par_val[another_lang_row,:]))
+            num_of_common_features = num_of_features1 + num_of_features2
             compare = (par_val[lang_row,:] == par_val[another_lang_row,:])
             num_of_equal_features = compare.sum()
             if num_of_common_features == 0:
@@ -59,8 +61,6 @@ def main(args: argparse.Namespace):
             weirdest = lang
     print("Centroid of the genus :", centroid)
     print("The weirdest language of the genus :", weirdest)
-    print("Sum of similarity scores for every language in a genus :")
-    print(lang_score_dict)
     
 if __name__ == "__main__":
     args = parser.parse_args([] if "__file__" not in globals() else None)

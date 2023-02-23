@@ -4,7 +4,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("--input_language", default='aab', type=str, help="Language ID")
+parser.add_argument("--language", default='aab', type=str, help="Language ID")
 
 def main(args: argparse.Namespace):
     par_val = np.loadtxt('data/param_value.csv', delimiter=',') # feature_value
@@ -13,7 +13,7 @@ def main(args: argparse.Namespace):
     langs_dict = json.loads(languages)
     
     scores_dict = {}
-    input_lang = args.input_language
+    input_lang = args.language
     
     if input_lang not in langs_dict.keys():
         print("This language code is wrong")
@@ -26,7 +26,9 @@ def main(args: argparse.Namespace):
         if lang == input_lang:
             continue
         lang_row = langs_dict[lang]
-        num_of_common_features = np.count_nonzero(~np.isnan(par_val[input_lang_row,:] + par_val[lang_row,:]))
+        num_of_features1 = np.count_nonzero(~np.isnan(par_val[input_lang_row,:]))
+        num_of_features2 = np.count_nonzero(~np.isnan(par_val[lang_row,:]))
+        num_of_common_features = num_of_features1 + num_of_features2
         compare = (par_val[input_lang_row,:] == par_val[lang_row,:])
         num_of_equal_features = compare.sum()
         if num_of_common_features == 0:
