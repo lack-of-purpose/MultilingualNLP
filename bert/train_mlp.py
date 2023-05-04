@@ -26,7 +26,7 @@ embeddings_train, embeddings_test, tags_train, tags_test = train_test_split(embe
 
 # Train a classifier
 #classifier = MLPClassifier(solver='lbfgs', verbose=True)
-classifier = LogisticRegression(max_iter=200, solver='newton-cg')
+classifier = LogisticRegression(max_iter=200)
 classifier.fit(embeddings_train, tags_train)
 
 # Evaluate the classifier
